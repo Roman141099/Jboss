@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <script type="text/javascript">
+            var CompetenseList = {
+                    'FrontendDeveloper':'FrontendDeveloper',
+                    'BackDeveloper':'BackDeveloper',
+                    'WebDesiner':'Веб Дизайнер',
+                    'Analist':'Аналитик',
+                    'FrontendDevelopersdsa':'FrontendDeveloperase',
+                    'BackDevelopersas':'BackDeveloperasd',
+                    'WebDesinerads':'Дизайн',
+                    'Analistsda':'Аналитика',
+                }
+            var InterestList = {
+                    'i1':'Компьютерные науки',
+                    'i2':'Инженерное дело',
+                    'i3':'Энергетика',
+                    'i4':'Физика и астрономия',
+                    'i5':'Математика',
+                    'i6':'Химия',
+                    'i7':'Материаловедение',
+                    'i8':'Медицина',
+                    'i9':'Бизнес',
+                    'i10':'Исскуство',
+                    'i11':'Мультидисциплинарный',
+                    'i12':'Менеджмент',
+                    'i13':'Экономика и финансы',
+                    'i14':'Иммунология и микробиология',
+                    'i15':'Фармакология, токсикология и фармацевтика',
+                }
+            var FreeInterest={};
+            var FreeCompetense={};
+            Object.assign(FreeCompetense, CompetenseList);
+            Object.assign(FreeInterest, InterestList);
+            var SelectedCompetense = {};
+            var SelectedInterest = {};
+                // console.log(CompetenseList);
+                // console.log(FreeCompetense); 
+                // console.log(SelectedCompetense);
+            var closeID=(id)=>{
+                document.getElementById(id).style.display = "none";
+            }
+            var openID=(id)=>{
+                document.getElementById(id).style.display = "block";
+            }
+            var RemoveFromSelected=(element)=>{
+                var id=element.parentNode.id.substring(0, element.parentNode.id.length - 1);
+                FreeCompetense[id] = CompetenseList[id];
+                addFreeCompetent(id,CompetenseList[id]);
+                delete SelectedCompetense[element.id];
+                document.getElementById(element.parentNode.id).remove();            
+            }
+            var SelectCompetent=(element)=>{
+                SelectedCompetense[element.id] = CompetenseList[element.id];
+                addSelectedCompetent(element.id+'S',CompetenseList[element.id]);
+                delete FreeCompetense[element.id];                              
+                document.getElementById(element.id).remove();
+            }
+            var RemoveFromSelectedInterest=(element)=>{
+                var id=element.parentNode.id.substring(0, element.parentNode.id.length - 1);
+                FreeInterest[id] = InterestList[id];
+                addFreeInterest(id,InterestList[id]);
+                delete SelectedInterest[element.id];
+                document.getElementById(element.parentNode.id).remove();            
+            }
+            var SelectInterest=(element)=>{
+                SelectedInterest[element.id] = InterestList[element.id];
+                addSelectedInterest(element.id+'S',InterestList[element.id]);
+                delete FreeInterest[element.id];                              
+                document.getElementById(element.id).remove();
+            }
+            var getRandomInt=(max)=>{
+                return Math.floor(Math.random() * Math.floor(max));
+            }
+            var addSelectedCompetent=(id,Name)=>{
+                var ret='<div id='+id+' class="SelectedCompetense">'+Name+'<div class="DeleteFromSelected" onclick="RemoveFromSelected(this)">-</div></div>';
+                document.getElementById('SelectedCompeties').innerHTML += ret;
+            }
+            var addFreeCompetent=(id,Name)=>{
+                var ret='<div id='+id+' class="Competense" onclick="SelectCompetent(this)">'+Name+'</div>';
+                document.getElementById('FreeCompeties').innerHTML += ret;
+            }
+            var addSelectedInterest=(id,Name)=>{
+                var ret='<div id='+id+' class="SelectedCompetense">'+Name+'<div class="DeleteFromSelected" onclick="RemoveFromSelectedInterest(this)">-</div></div>';
+                document.getElementById('SelectedInterest').innerHTML += ret;
+            }
+            var addFreeInterest=(id,Name)=>{
+                var ret='<div id='+id+' class="Competense" onclick="SelectInterest(this)">'+Name+'</div>';
+                document.getElementById('FreeInterest').innerHTML += ret;
+            }
+            var PrintCompetenseList=(CompetenseList)=>{
+                for (let key in InterestList) {
+                    addFreeInterest(key,InterestList[key]);
+                    console.log(InterestList[key]);
+                }
+                for (let key in CompetenseList) {
+                    addFreeCompetent(key,CompetenseList[key]);
+                    console.log(CompetenseList[key]);
+                }
+            }
+            var OpenClosediv=(div)=>{
+                if(div.classList.contains('ExpertSmall')){
+                    div.classList.remove('ExpertSmall'); 
+                    div.classList.add('ExpertBig');
+                    return;
+                }
+                div.classList.remove('ExpertBig'); 
+                div.classList.add('ExpertSmall');
+            }
+            window.onload = function(){
+                PrintCompetenseList(CompetenseList);
+            }
+        </script>
+        <style type="text/css">
+            #all{
+                width: 100%;
+                height: 97.5vh;
+                background: #f8f9fa;
+            }
+            #MainMenu{
+                width: calc(100% - 60px);
+                margin-left: 30px;
+                height: 75px;
+                border-radius: 10px;
+                background: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+            }
+            #SiteSearch{
+                margin-top: calc(37.5px - 18.75px);
+                float: right;
+                margin-right: 30px;
+                height: 50%;
+                width: 50px;
+                background: #fff;
+                border-radius: 5px;
+                font-size: 18px;
+                color: #021B79;
+                transition: 0.5s;
+            }
+            #SiteSearch:focus{
+                outline: none;
+                width: 300px;
+            }
+            #CreateComand{
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                width: calc(100% - 60px - 20px - 10px);
+                height: calc(100% - 125px);
+                float: left;
+                margin-top: 15px;
+                margin-left: 30px;
+                background: 
+                    linear-gradient(#fff,#fff) padding-box, /*this is your grey background*/
+                    linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%) border-box;
+                padding:10px;
+                border: 5px solid transparent;
+                border-radius:20px;
+                display:inline-block;
+                float:left;
+                overflow: auto;
+            }
+            #Left{
+                width: calc(100%/4 - 20px);
+                height: calc(100% - 20px);
+                margin: 10px;
+                float:left;                
+            }
+            #middle{
+                width: calc(100%/4 - 20px);
+                height: calc(100% - 20px);
+                margin: 10px;
+                float:left;                
+            }
+            #Right{
+                width: calc(100%/2 - 20px);
+                height: calc(100% - 20px);
+                margin: 10px;
+                float:left;                
+            }
+            .InputField{
+                padding:15px;
+                width: calc(100% - 30px);
+                float: left;
+                color: #120a8f;
+                font-family: arial;
+                font-size: 24px;
+                margin-bottom: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                border-radius:20px;
+            }
+            .SelectForm{
+                width: calc(100% - 4px);                
+                height: 30px;                
+                font-family: arial;
+                font-size: 14px;
+                border-radius:7px;
+                border-color: #43CBFF;
+                border-width: 2px;
+                transition: 0.5s;    
+            }
+            .CompetenseSelect{
+                width: calc(100% - 20px);
+                margin: 10px 0;
+                padding: 10px;
+                height: calc(50% - 60px - 30px);
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                border-radius:20px;
+                overflow: auto;
+            }
+            .SelectForm:focus{
+                outline: none;
+                border-color: #9708CC
+            }
+            .SelectForm:hover{
+                cursor: pointer;
+            }
+            .Competense{                
+                box-shadow: 0 0 10px rgba(0,0,0,0.15);
+                background: #ddd;
+                border-radius:7px;
+                margin: 4px;
+                padding: 3px 15px;
+                width: calc(100% - 8px - 30px);
+                float: left;
+                color: #120a8f;
+                font-family: arial;
+                font-size: 18px;
+                transition: 0.5s;
+            }
+            .Competense:hover{
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                background: #f1f1f1;
+                cursor: pointer;
+            }
+            .SelectedCompetense{
+                box-shadow: 0 0 10px rgba(0,0,0,0.15);
+                background: #ddd;
+                border-radius:7px;
+                margin: 4px;
+                padding: 3px 15px;
+                width: calc(100% - 8px - 30px);
+                float: left;
+                color: #120a8f;
+                font-family: arial;
+                font-size: 18px;
+            }
+            .DeleteFromSelected{
+                float: right;
+                color: #120a8f;
+                font-size: 18px;
+            }
+            .DeleteFromSelected:hover{
+                cursor: pointer;
+                font-weight: bold;
+            }
+            .SelectInterest{
+                padding:15px;
+                width: calc(100% - 30px);
+                height: calc(50% - 53px - 30px);
+                float: left;
+                color: #120a8f;
+                font-family: arial;
+                font-size: 24px;
+                margin:10px 0;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                border-radius:20px;
+                overflow-y: auto;
+            }
+            .SelectButton {
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                width: calc(100%);
+                height: 75px;
+                padding: 15px 45px;
+                text-align: center;
+                text-transform: uppercase;
+                font-size: calc(18px + (18 - 14) * ( (100vw - 480px) / ( 1024 - 480) ));
+                transition: 0.5s;
+                background-size: 200% auto;
+                background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
+                border: 0px solid transparent;
+                border-radius: 10px;
+                display: block;
+                color: #fff;
+            }
+
+            .SelectButton:hover {
+                cursor: pointer;
+                background-position: right center;
+                color: #fff;
+                text-decoration: none;
+            }
+            .SelectButton:focus{
+                outline: none;
+            }
+            .SelectExpert{
+                padding:15px;
+                width: calc(100% - 30px);
+                height: calc(50% - 30px - 10px);
+                float: left;
+                color: #120a8f;
+                font-family: arial;
+                font-size: 24px;
+                margin:10px 0;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                border-radius:20px;
+                overflow-y: auto;
+            }
+            .Expert{
+                box-shadow: 0 0 10px rgba(0,0,0,0.15);
+                background: #ddd;
+                border-radius:7px;
+                margin: 4px;
+                padding: 5px 15px;
+                width: calc(100% - 8px - 30px);
+                float: left;
+                color: #120a8f;
+                font-family: arial;
+                font-size: 18px;
+                overflow: hidden;
+            }
+            #Exp,#LocExp{
+                display: none;
+            }
+            .Expert:hover{
+                cursor: pointer;
+            }
+            .ExpertSmall{height: 18px;}
+            .ExpertBig{
+                min-height: 18px;
+                background: #e3e3e3;
+            }
+            .ExpertSpoiler{
+                transition: 0.5s;
+                border: none;
+            }      
+            ::-webkit-scrollbar{
+                width: 7px;
+                height: 12px;
+            }
+            ::-webkit-scrollbar-track{
+                -webkit-box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0) inset;
+                background-color: rgba(0, 0, 0, 0) inset;
+                border-radius: 10px;
+            }
+            ::-webkit-scrollbar-thumb{
+                border-radius: 10px;
+                background: #120aff;
+        </style>
+    </head>
+    <body>
+        <div id="all">
+            <div id="MainMenu">
+                <input type="text" name="SiteSearch" id="SiteSearch" placeholder="Поиск"></input>
+                <!-- <img src="img/rgd_emblem.png" onclick="openID('off');">  -->
+                <!-- <div id="off" onclick="GetZapros();">                
+                </div> -->               
+            </div>
+            <div id="CreateComand">
+                <div id="Left">
+                    <div class="InputField">
+                        <div style="margin-bottom: 5px">Название проекта</div>         
+                        <input type="text" name="Name" placeholder="Введите название" class="SelectForm">
+                    </div>
+                    <div class="InputField CompetenseSelect">
+                        <div style="margin-left: 4px">Компетенции</div>
+                        <div id="FreeCompeties">         
+                        </div>
+                    </div>
+                    <div class="InputField CompetenseSelect">
+                        <div style="margin-left: 4px">Выбранные компетенции</div>
+                        <div id="SelectedCompeties">
+                        </div>
+                    </div>
+                </div>
+                <div id="middle">
+                    <div class="SelectInterest" style="margin-top: 0px">
+                        Научные интересов
+                        <div id="FreeInterest">         
+                        </div>
+                    </div>
+                    <div class="SelectInterest">
+                        Выбранные интересы
+                        <div id="SelectedInterest">
+                        </div>
+                    </div>
+                    <input type="button" name="Name" value="Найти экспертов" onclick="openID('Exp'); openID('LocExp')" class="InputField SelectButton">
+                </div>
+                <div id="Right">
+                    <div class="SelectExpert" style="margin-top: 0px">
+                        Эксперты Scopus
+                        <div id="Exp">
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Shabanov, A.Yu.<br>
+                                Skopus Id: 6507455462<br>  
+                                Цитирования: 351<br>
+                                Ссылочка на профиль Skopus: <a target="_blank" >Перейти</a><br>                               
+                            </div>
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Galyshev, Yu.V.<br>
+                                Skopus Id: 4554650762<br>  
+                                Цитирования: 285<br>
+                                Ссылочка на профиль Skopus: <a target="_blank" >Перейти</a><br>                               
+                            </div>
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Zaitsev, A.B.<br>
+                                Skopus Id: 5546265074<br>  
+                                Цитирования: 194<br>
+                                Ссылочка на профиль Skopus: <a target="_blank" >Перейти</a><br>                               
+                            </div>
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Sidorov, A.A.<br>
+                                Skopus Id: 6554620745<br>  
+                                Цитирования: 132<br>
+                                Ссылочка на профиль Skopus: <a target="_blank" >Перейти</a><br>                               
+                            </div>
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Nikodijevic, M.<br>
+                                Skopus Id: 5462650745<br>  
+                                Цитирования: 56<br>
+                                Ссылочка на профиль Skopus: <a target="_blank" >Перейти</a><br>                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="SelectExpert">
+                        Сотрудники университета
+                        <div id="LocExp">
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Яблонова Анна Спиридоновна<br>                              
+                            </div>
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Ковригин Владислав Юрьевич<br>                             
+                            </div>
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Веселовский Кирилл<br>                             
+                            </div>
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Овощникова Вера Георгиевна<br>                             
+                            </div>
+                            <div class="Expert ExpertSmall" onclick="OpenClosediv(this)">
+                                Тихоненко Антон Андреевич<br>                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,7 @@
+utils\EmailSender$1.class
+utils\EmailSender.class
+beans\SendMsgBean.class
+beans\UserBean.class
+scopus\ScopusParser.class
+scopus\Person.class
+beans\TestBean.class
